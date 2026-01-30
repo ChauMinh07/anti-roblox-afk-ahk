@@ -1,4 +1,8 @@
 # roblox-afk-ahk
-Creating this macro for this purpose allows you to AFK in Roblox while working or watching movies without needing to switch tabs back to Roblox and send input. In other words, you can watch a full episode longer than 20 minutes without having to click back into Roblox.
+Creating this macro for this purpose allows you to AFK in Roblox while working or watching movies without needing to switch tabs back to Roblox and send input. 
 
-To use it, you need to install autohotkey v2 on your computer
+In other words, you can watch a full episode longer than 20 minutes without having to click back into Roblox.
+
+To use it, you need to install autohotkey v2 on your computer.
+
+Open the macro while Roblox is starting, and you’re good to go!
