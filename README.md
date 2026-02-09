@@ -6,3 +6,8 @@ In other words, you can watch a full episode longer than 20 minutes without havi
 To use it, you need to install autohotkey v2 on your computer.
 
 Open the macro while Roblox is starting, and you’re good to go!
+
+[Notes]
+- tempBlockInput is enable by default, so it's need to open with administrator, you can turn it off in script.
+- with exe file, you need to open it with administrator once before you can edit tempBlockInput in .ini file.
+- you can check source code of exe file by right click on it and open with vscode then scrolldown and there it is.
