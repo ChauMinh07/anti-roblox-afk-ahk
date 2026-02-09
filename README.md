@@ -9,5 +9,6 @@ Open the macro while Roblox is starting, and you’re good to go!
 
 [Notes]
 - tempBlockInput is enable by default, so it's need to open with administrator, you can turn it off in script.
-- with exe file, you need to open it with administrator once before you can edit tempBlockInput in .ini file.
+- download or open exe file can get warning by Windows Security due to no code-signing certificate
 - you can check source code of exe file by right click on it and open with vscode then scrolldown and there it is.
+- with exe file, you need to open it with administrator once before you can edit tempBlockInput in .ini file.
