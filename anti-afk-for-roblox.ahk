@@ -170,27 +170,27 @@ CheckingAdministrator() {
 CheckingSaveValueForEXE(*) {
     global hGUI := Gui()
     if A_IsCompiled {
-        if !FileExist(A_Temp "/roblox-anti-afk-setttings.ini") {
-            IniWrite robloxPlatform, A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "robloxPlatform"
-            IniWrite button, A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "button"
-            IniWrite timeToCheck, A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "timeToCheck"
-            IniWrite tempBlockInput, A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "tempBlockInput"
-            IniWrite ignoreTempBlockInput, A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "ignoreTempBlockInput"
-            IniWrite moveMouse, A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "moveMouse"
+        if !FileExist(A_ScriptDir "/roblox-anti-afk-setttings.ini") {
+            IniWrite robloxPlatform, A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "robloxPlatform"
+            IniWrite button, A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "button"
+            IniWrite timeToCheck, A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "timeToCheck"
+            IniWrite tempBlockInput, A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "tempBlockInput"
+            IniWrite ignoreTempBlockInput, A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "ignoreTempBlockInput"
+            IniWrite moveMouse, A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "moveMouse"
 
-            SaveCheckTimeValue := IniRead(A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "timeToCheck")
-            SaveButtonValue := IniRead(A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "button")
-            SaveRobloxPlatformValue := IniRead(A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "robloxPlatform")
-            SaveBlockInputValue := IniRead(A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "tempBlockInput")
-            SaveGameIgnoreBIValue := IniRead(A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "ignoreTempBlockInput")
-            SaveMoveMouseValue := IniRead(A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "moveMouse")
+            SaveCheckTimeValue := IniRead(A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "timeToCheck")
+            SaveButtonValue := IniRead(A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "button")
+            SaveRobloxPlatformValue := IniRead(A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "robloxPlatform")
+            SaveBlockInputValue := IniRead(A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "tempBlockInput")
+            SaveGameIgnoreBIValue := IniRead(A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "ignoreTempBlockInput")
+            SaveMoveMouseValue := IniRead(A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "moveMouse")
         } else {
-            SaveCheckTimeValue := IniRead(A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "timeToCheck")
-            SaveButtonValue := IniRead(A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "button")
-            SaveRobloxPlatformValue := IniRead(A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "robloxPlatform")
-            SaveBlockInputValue := IniRead(A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "tempBlockInput")
-            SaveGameIgnoreBIValue := IniRead(A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "ignoreTempBlockInput")
-            SaveMoveMouseValue := IniRead(A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "moveMouse")
+            SaveCheckTimeValue := IniRead(A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "timeToCheck")
+            SaveButtonValue := IniRead(A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "button")
+            SaveRobloxPlatformValue := IniRead(A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "robloxPlatform")
+            SaveBlockInputValue := IniRead(A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "tempBlockInput")
+            SaveGameIgnoreBIValue := IniRead(A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "ignoreTempBlockInput")
+            SaveMoveMouseValue := IniRead(A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "moveMouse")
 
             robloxPlatform := SaveRobloxPlatformValue
             button := SaveButtonValue
@@ -292,12 +292,12 @@ HideDescription() {
 }
 
 SaveValue(*) {
-    IniWrite RobloxPlatformValue.Text, A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "robloxPlatform"
-    IniWrite ButtonValue.Text, A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "button"
-    IniWrite CheckTimeValue.Text, A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "timeToCheck"
-    IniWrite BlockInputValue.Text, A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "tempBlockInput"
-    IniWrite GameIgnoreBIValue.Text, A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "ignoreTempBlockInput"
-    IniWrite MoveMouseValue.Text, A_Temp "/roblox-anti-afk-setttings.ini", "Settings", "moveMouse"
+    IniWrite RobloxPlatformValue.Text, A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "robloxPlatform"
+    IniWrite ButtonValue.Text, A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "button"
+    IniWrite CheckTimeValue.Text, A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "timeToCheck"
+    IniWrite BlockInputValue.Text, A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "tempBlockInput"
+    IniWrite GameIgnoreBIValue.Text, A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "ignoreTempBlockInput"
+    IniWrite MoveMouseValue.Text, A_ScriptDir "/roblox-anti-afk-setttings.ini", "Settings", "moveMouse"
 
     robloxPlatform := RobloxPlatformValue.Text
     button := ButtonValue.Text
