@@ -254,12 +254,14 @@ if robloxPlatform == "MS" {
     RealRobloxName := "ahk_exe applicationframehost.exe"
 }
 CheckingAdministrator()
+CheckingSaveValueForEXE()
 
 AntiAFK() ;demo task
 SetTimer(AntiAFK, timeToCheck)
-CheckingSaveValueForEXE()
+
 
 ExitSoftware(*) {
+    SaveValue
     ExitApp
 }
 
@@ -275,49 +277,51 @@ CheckingAdministrator() {
 ; Luoi` lam`
 CheckingSaveValueForEXE(*) {
     global hGUI := Gui()
+
+    global robloxPlatform
+    global button
+    global timeToCheck
+    global tempBlockInput
+    global ignoreTempBlockInput
+    global moveMouse
+
     if A_IsCompiled {
-        if !FileExist(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini") {
-            global robloxPlatform
-            global button
-            global timeToCheck
-            global tempBlockInput
-            global ignoreTempBlockInput
-            global moveMouse
 
-            DirCreate A_AppData "\Autohotkey_v2"
+        if !FileExist(A_ScriptDir "\anti-afk-for-roblox-settings.ini") {
+            ;DirCreate A_AppData "\Autohotkey_v2"
 
-            IniWrite robloxPlatform, A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            IniWrite robloxPlatform, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "robloxPlatform"
-            IniWrite button, A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings", "button"
-            IniWrite timeToCheck, A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings", "timeToCheck"
-            IniWrite tempBlockInput, A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            IniWrite button, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "button"
+            IniWrite timeToCheck, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "timeToCheck"
+            IniWrite tempBlockInput, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "tempBlockInput"
-            IniWrite ignoreTempBlockInput, A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            IniWrite ignoreTempBlockInput, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "ignoreTempBlockInput"
-            IniWrite moveMouse, A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings", "moveMouse"
+            IniWrite moveMouse, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "moveMouse"
 
-            SaveCheckTimeValue := IniRead(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            SaveCheckTimeValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "timeToCheck")
-            SaveButtonValue := IniRead(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings", "button")
-            SaveRobloxPlatformValue := IniRead(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            SaveButtonValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "button")
+            SaveRobloxPlatformValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "robloxPlatform")
-            SaveBlockInputValue := IniRead(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            SaveBlockInputValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "tempBlockInput")
-            SaveGameIgnoreBIValue := IniRead(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            SaveGameIgnoreBIValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "ignoreTempBlockInput")
-            SaveMoveMouseValue := IniRead(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            SaveMoveMouseValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "moveMouse")
         } else {
-            SaveCheckTimeValue := IniRead(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            SaveCheckTimeValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "timeToCheck")
-            SaveButtonValue := IniRead(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings", "button")
-            SaveRobloxPlatformValue := IniRead(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            SaveButtonValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "button")
+            SaveRobloxPlatformValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "robloxPlatform")
-            SaveBlockInputValue := IniRead(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            SaveBlockInputValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "tempBlockInput")
-            SaveGameIgnoreBIValue := IniRead(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            SaveGameIgnoreBIValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "ignoreTempBlockInput")
-            SaveMoveMouseValue := IniRead(A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+            SaveMoveMouseValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "moveMouse")
 
             robloxPlatform := SaveRobloxPlatformValue
@@ -331,30 +335,30 @@ CheckingSaveValueForEXE(*) {
 
         hGUI.Add("Text", "x22 y30 w190 h25 +BackgroundTrans", "Check Time")
         CheckTimeDescription := hGUI.Add("Button", "x5 y29 w15 h15 +BackgroundTrans", "?")
-        global CheckTimeValue := hGUI.Add("Edit", "x140 y28 w55 h18", SaveCheckTimeValue)
+        global CheckTimeValue := hGUI.Add("Edit", "x130 y28 w65 h18 +Number", SaveCheckTimeValue)
 
         hGUI.Add("Text", "x22 y55 w190 h25 +BackgroundTrans", "Button")
         ButtonDescription := hGUI.Add("Button", "x5 y54 w15 h15 +BackgroundTrans", "?")
-        global ButtonValue := hGUI.Add("Edit", "x140 y53 w55 h18", SaveButtonValue)
+        global ButtonValue := hGUI.Add("Hotkey", "x130 y53 w65 h18", SaveButtonValue)
 
         hGUI.Add("Text", "x22 y80 w190 h25 +BackgroundTrans", "Roblox Platform")
         RobloxPlatformDescription := hGUI.Add("Button", "x5 y79 w15 h15 +BackgroundTrans", "?")
-        global RobloxPlatformValue := hGUI.Add("DropDownList", "x140 y77 w55 h105", ["MS", "WEB"])
+        global RobloxPlatformValue := hGUI.Add("DropDownList", "x130 y77 w65 h105", ["MS", "WEB"])
         RobloxPlatformValue.Text := SaveRobloxPlatformValue
 
         hGUI.Add("Text", "x22 y105 w190 h25 +BackgroundTrans", "Block Input")
-        BlockInputDescription := hGUI.Add("Button", "x5 y104 w15 h15 +BackgroundTrans", "?")
-        global BlockInputValue := hGUI.Add("DropDownList", "x140 y102 w55 h105", [true, false])
+        BlockInputDescription := hGUI.Add("Button", "x5 y105 w15 h15 +BackgroundTrans", "?")
+        global BlockInputValue := hGUI.Add("DropDownList", "x130 y102 w65 h105", [true, false])
         BlockInputValue.Text := SaveBlockInputValue
 
         hGUI.Add("Text", "x22 y130 w190 h25 +BackgroundTrans", "Gaming Ignore BI")
         GameIgnoreBIDescription := hGUI.Add("Button", "x5 y129 w15 h15 +BackgroundTrans", "?")
-        global GameIgnoreBIValue := hGUI.Add("DropDownList", "x140 y127 w55 h105", [true, false])
+        global GameIgnoreBIValue := hGUI.Add("DropDownList", "x130 y127 w65 h105", [true, false])
         GameIgnoreBIValue.Text := SaveGameIgnoreBIValue
 
         hGUI.Add("Text", "x22 y155 w190 h25 +BackgroundTrans", "Move Mouse")
         MoveMouseDescription := hGUI.Add("Button", "x5 y154 w15 h15 +BackgroundTrans", "?")
-        global MoveMouseValue := hGUI.Add("DropDownList", "x140 y152 w55 h105", [true, false])
+        global MoveMouseValue := hGUI.Add("DropDownList", "x130 y152 w65 h105", [true, false])
         MoveMouseValue.Text := SaveMoveMouseValue
 
         CheckTimeValue.OnEvent("Change", SaveValue)
@@ -372,21 +376,37 @@ CheckingSaveValueForEXE(*) {
         GameIgnoreBIDescription.OnEvent("Click", (ctrl, info) => ShowDescription(ctrl, info, "GameIgnoreBIDescription"))
         MoveMouseDescription.OnEvent("Click", (ctrl, info) => ShowDescription(ctrl, info, "MoveMouseDescription"))
 
-        outside := hGUI.Add("Button", "x5 y180 w190 h25 +BackgroundTrans +Center", "Move Roblox off the screen")
-        inside := hGUI.Add("Button", "x5 y208 w190 h25 +BackgroundTrans +Center", "Move Roblox back to the screen")
+        global outside := hGUI.Add("Button", "x5 y180 w190 h25 +BackgroundTrans +Center", "Move Roblox off the screen")
+        global inside := hGUI.Add("Button", "x5 y208 w190 h25 +BackgroundTrans +Center", "Move Roblox back to the screen")
+        global minimizeGui := hGUI.Add("Button", "x5 y236 w190 h25 +BackgroundTrans +Center", "Minimize Gui to system tray")
+
+        tip := hGUI.Add("Text", "x5 y267 w190 h25 +BackgroundTrans +Center", "Delete file .ini to reset value")
         outside.Focus()
-        outside.OnEvent("Click", MoveOutside)
-        inside.OnEvent("Click", MoveInside)
-        hGUI.OnEvent("Close", ExitSoftware)
-        hGUI.Show("w200 h240")
+
+        hGUI.Show("w200 h290")
     } else {
         hGUI.Add("Text", "x0 y10 w200 h20 +BackgroundTrans +Center", "Roblox Anti-AFK is Running")
-        outside := hGUI.Add("Button", "x5 y30 w190 h25 +BackgroundTrans +Center", "Move Roblox off the screen")
-        inside := hGUI.Add("Button", "x5 y58 w190 h25 +BackgroundTrans +Center", "Move Roblox back to the screen")
-        outside.OnEvent("Click", MoveOutside)
-        inside.OnEvent("Click", MoveInside)
-        hGUI.OnEvent("Close", ExitSoftware)
-        hGUI.Show("w200 h88")
+
+        global outside := hGUI.Add("Button", "x5 y30 w190 h25 +BackgroundTrans +Center", "Move Roblox off the screen")
+        global inside := hGUI.Add("Button", "x5 y58 w190 h25 +BackgroundTrans +Center", "Move Roblox back to the screen")
+        global minimizeGui := hGUI.Add("Button", "x5 y86 w190 h25 +BackgroundTrans +Center", "Minimize Gui to system tray")
+
+        hGUI.Show("w200 h116")
+    }
+
+    outside.OnEvent("Click", MoveOutside)
+    inside.OnEvent("Click", MoveInside)
+    minimizeGui.OnEvent("Click", (*) => hGUI.Hide())
+    hGUI.OnEvent("Close", ExitSoftware)
+
+    A_TrayMenu.Add("Show", (*) => hGUI.Show())
+    A_TrayMenu.Default := "Show"
+
+    ;Safety
+    if (timeToCheck < 1000 && tempBlockInput) {
+        tempBlockInput := false
+        BlockInputValue.Text := 0
+        MsgBox("BlockInput is disable for safety due to timeToCheck < 1000 ms")
     }
 }
 
@@ -396,7 +416,10 @@ ShowDescription(ctrl, info, i) {
     MouseGetPos(&mouse_desc_x, &mouse_desc_y)
 
     if (i == "CheckTimeDescription") {
-        ToolTip("Time per checking in miliseconds", mouse_desc_x + 10, mouse_desc_y - 20, 1)
+        global timeToCheck
+        sTime := timeToCheck / 1000
+        mTime := sTime / 60
+        ToolTip("Time per checking in miliseconds`n`nCurrent:`nmiliseconds: " timeToCheck "ms`nor seconds: " sTime "s`nor minutes: " mTime "m", mouse_desc_x + 10, mouse_desc_y - 20, 1)
     } else if (i == "ButtonDescription") {
         ToolTip(
             "Change this to the button you want to press when switching tabs`nSearch codenames for button: https://www.autohotkey.com/docs/v2/KeyList.htm",
@@ -431,15 +454,19 @@ HideDescription() {
 }
 
 SaveValue(*) {
-    IniWrite RobloxPlatformValue.Text, A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+    if !A_IsCompiled {
+        return
+    }
+
+    IniWrite RobloxPlatformValue.Text, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
         "robloxPlatform"
-    IniWrite ButtonValue.Text, A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings", "button"
-    IniWrite CheckTimeValue.Text, A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings", "timeToCheck"
-    IniWrite BlockInputValue.Text, A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+    IniWrite ButtonValue.Value, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "button"
+    IniWrite CheckTimeValue.Text, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "timeToCheck"
+    IniWrite BlockInputValue.Text, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
         "tempBlockInput"
-    IniWrite GameIgnoreBIValue.Text, A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings",
+    IniWrite GameIgnoreBIValue.Text, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
         "ignoreTempBlockInput"
-    IniWrite MoveMouseValue.Text, A_AppData "\Autohotkey_v2\roblox-anti-afk-setttings.ini", "Settings", "moveMouse"
+    IniWrite MoveMouseValue.Text, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "moveMouse"
 
     robloxPlatform := RobloxPlatformValue.Text
     button := ButtonValue.Text
@@ -450,8 +477,8 @@ SaveValue(*) {
 
     WinGetPos &appX, &appY, , , hGUI
 
-    ToolTip("You have been changed the settings`nYou need to restart the app to apply new changes", appX - 885, appY -
-        140, 2)
+    ToolTip("You have been changed the settings`nYou need to restart the app to apply new changes", appX - 890, appY -
+        135, 2)
     SetTimer RemoveChangeWarning, 3000
 }
 
@@ -480,6 +507,13 @@ MoveInside(*) {
 }
 
 AntiAFK() {
+    global robloxPlatform
+    global button
+    global timeToCheck
+    global tempBlockInput
+    global ignoreTempBlockInput
+    global moveMouse
+
     robloxWindow := WinExist(RealRobloxName)
     if robloxWindow {
         if tempBlockInput {
