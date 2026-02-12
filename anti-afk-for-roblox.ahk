@@ -288,8 +288,6 @@ CheckingSaveValueForEXE(*) {
     if A_IsCompiled {
 
         if !FileExist(A_ScriptDir "\anti-afk-for-roblox-settings.ini") {
-            ;DirCreate A_AppData "\Autohotkey_v2"
-
             IniWrite robloxPlatform, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "robloxPlatform"
             IniWrite button, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "button"
