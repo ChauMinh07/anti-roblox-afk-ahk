@@ -30,7 +30,9 @@ global ignoreTempBlockInput := true
 ;false if disagree
 global moveMouse := false
 
-
+;Fast close by using hotkey
+;Search codenames for button: https://www.autohotkey.com/docs/v2/KeyList.htm
+global closeHotkey := "^+0"
 
 
 
@@ -259,6 +261,7 @@ CheckingSaveValueForEXE()
 AntiAFK() ;demo task
 SetTimer(AntiAFK, timeToCheck)
 
++0:: ExitSoftware
 
 ExitSoftware(*) {
     SaveValue
@@ -284,6 +287,7 @@ CheckingSaveValueForEXE(*) {
     global tempBlockInput
     global ignoreTempBlockInput
     global moveMouse
+    global closeHotkey
 
     if A_IsCompiled {
 
@@ -297,6 +301,7 @@ CheckingSaveValueForEXE(*) {
             IniWrite ignoreTempBlockInput, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "ignoreTempBlockInput"
             IniWrite moveMouse, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "moveMouse"
+            IniWrite closeHotkey, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "closeHotkey"
 
             SaveCheckTimeValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "timeToCheck")
@@ -309,6 +314,8 @@ CheckingSaveValueForEXE(*) {
                 "ignoreTempBlockInput")
             SaveMoveMouseValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "moveMouse")
+            SaveCloseHotkeyValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
+                "closeHotkey")
         } else {
             SaveCheckTimeValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "timeToCheck")
@@ -321,6 +328,8 @@ CheckingSaveValueForEXE(*) {
                 "ignoreTempBlockInput")
             SaveMoveMouseValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
                 "moveMouse")
+            SaveCloseHotkeyValue := IniRead(A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
+                "closeHotkey")
 
             robloxPlatform := SaveRobloxPlatformValue
             button := SaveButtonValue
@@ -328,6 +337,7 @@ CheckingSaveValueForEXE(*) {
             tempBlockInput := SaveBlockInputValue
             ignoreTempBlockInput := SaveGameIgnoreBIValue
             moveMouse := SaveMoveMouseValue
+            closeHotkey := SaveCloseHotkeyValue
         }
         hGUI.Add("Text", "x0 y10 w200 h20 +BackgroundTrans +Center +cPurple", "Roblox Anti-AFK is Running")
 
@@ -378,17 +388,23 @@ CheckingSaveValueForEXE(*) {
         global inside := hGUI.Add("Button", "x5 y208 w190 h25 +BackgroundTrans +Center", "Move Roblox back to the screen")
         global minimizeGui := hGUI.Add("Button", "x5 y236 w190 h25 +BackgroundTrans +Center", "Minimize Gui to system tray")
 
-        tip := hGUI.Add("Text", "x5 y267 w190 h25 +BackgroundTrans +Center", "Delete file .ini to reset value")
+        tip := hGUI.Add("Text", "x5 y268 w190 h25 +BackgroundTrans +Center", "Delete file .ini to reset value")
+
+        global closeHotkeyValue := hGUI.Add("Hotkey", "x20 y290 w90 h18", SaveCloseHotkeyValue)
+        tip2 := hGUI.Add("Text", "x100 y291 w90 h18 +BackgroundTrans +Center", " to close app")
+
+        closeHotkeyValue.OnEvent("Change", SaveValue)
+
         outside.Focus()
 
-        hGUI.Show("w200 h290")
+        hGUI.Show("w200 h315")
     } else {
         hGUI.Add("Text", "x0 y10 w200 h20 +BackgroundTrans +Center", "Roblox Anti-AFK is Running")
 
         global outside := hGUI.Add("Button", "x5 y30 w190 h25 +BackgroundTrans +Center", "Move Roblox off the screen")
         global inside := hGUI.Add("Button", "x5 y58 w190 h25 +BackgroundTrans +Center", "Move Roblox back to the screen")
         global minimizeGui := hGUI.Add("Button", "x5 y86 w190 h25 +BackgroundTrans +Center", "Minimize Gui to system tray")
-
+        
         hGUI.Show("w200 h116")
     }
 
@@ -400,12 +416,18 @@ CheckingSaveValueForEXE(*) {
     A_TrayMenu.Add("Show", (*) => hGUI.Show())
     A_TrayMenu.Default := "Show"
 
+    ;Register Event
+    if closeHotkey {
+        Hotkey(closeHotkey, ExitSoftware)
+    }
+    
     ;Safety
     if (timeToCheck < 1000 && tempBlockInput) {
         tempBlockInput := false
         BlockInputValue.Text := 0
         MsgBox("BlockInput is disable for safety due to timeToCheck < 1000 ms")
     }
+
 }
 
 ShowDescription(ctrl, info, i) {
@@ -465,13 +487,15 @@ SaveValue(*) {
     IniWrite GameIgnoreBIValue.Text, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings",
         "ignoreTempBlockInput"
     IniWrite MoveMouseValue.Text, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "moveMouse"
+    IniWrite closeHotkeyValue.Value, A_ScriptDir "\anti-afk-for-roblox-settings.ini", "Settings", "closeHotkey"
 
     robloxPlatform := RobloxPlatformValue.Text
-    button := ButtonValue.Text
+    button := ButtonValue.Value
     timeToCheck := CheckTimeValue.Text
     tempBlockInput := BlockInputValue.Text
     ignoreTempBlockInput := GameIgnoreBIValue.Text
     moveMouse := MoveMouseValue.Text
+    closeHotkey := closeHotkeyValue.Value
 
     WinGetPos &appX, &appY, , , hGUI
 
@@ -514,6 +538,7 @@ AntiAFK() {
 
     robloxWindow := WinExist(RealRobloxName)
     if robloxWindow {
+
         if tempBlockInput {
             if ignoreTempBlockInput {
                 if !WinActive(robloxWindow) {
@@ -536,12 +561,18 @@ AntiAFK() {
         Sleep(15)
         Send("{" button " up}")
         Sleep(10)
-        WinActivate(currentWindow)
+
+        if WinExist(currentWindow) {
+            WinActivate(currentWindow)
+        }
+
         if moveMouse {
             MouseMove(currentX, currentY)
         }
+
         if tempBlockInput {
             BlockInput false
         }
+
     }
 }
