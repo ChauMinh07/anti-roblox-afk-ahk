@@ -11,7 +11,7 @@ global robloxPlatform := "WEB"
 global button := "="
 
 ;Time per checking in seconds
-global timeToCheck := 1190 ; seconds
+global timeToCheck := 1190000 ; miliseconds (1000ms = 1s)
 
 ;Block any input from your Keyboard and Mouse when checking? and then it will unblock
 ;true if argee
@@ -256,7 +256,7 @@ if robloxPlatform == "MS" {
 CheckingAdministrator()
 
 AntiAFK() ;demo task
-SetTimer(AntiAFK, timeToCheck * 1000)
+SetTimer(AntiAFK, timeToCheck)
 CheckingSaveValueForEXE()
 
 ExitSoftware(*) {
@@ -396,7 +396,7 @@ ShowDescription(ctrl, info, i) {
     MouseGetPos(&mouse_desc_x, &mouse_desc_y)
 
     if (i == "CheckTimeDescription") {
-        ToolTip("Time per checking in seconds", mouse_desc_x + 10, mouse_desc_y - 20, 1)
+        ToolTip("Time per checking in miliseconds", mouse_desc_x + 10, mouse_desc_y - 20, 1)
     } else if (i == "ButtonDescription") {
         ToolTip(
             "Change this to the button you want to press when switching tabs`nSearch codenames for button: https://www.autohotkey.com/docs/v2/KeyList.htm",
